@@ -9,19 +9,21 @@ CREATE TABLE products (
     department_name VARCHAR(20) NOT NULL,
     price DECIMAL(10 , 2 ) NOT NULL,
     stock_quantity INT NOT NULL,
+    product_sales INT NOT NULL,
     PRIMARY KEY (item_id)
 );
 
-INSERT INTO products (product_name, department_name, price, stock_quantity) VALUES
-("t-shirt", "apparel_dep", 15 ,  60),
-("headphones", "music_dep", 25, 20),
-("book","books_dep", 12, 100),
-("backpack", "sport_dep",60, 30),
-("computer","electronics_dep", 1500, 100),
-("sun glasses", "apparel_dep",30, 100),
-("coffee", "food_dep", 3, 4),
-("notebook", "work_dep", 50, 10),
-("pen", "work_dep", 1, 250),
-("chair", "furniture_dep", 200, 10);
+INSERT INTO products (product_name, department_name, price, stock_quantity, product_sales) VALUES
+("t-shirt", "apparel_dep", 10 ,  1000, 0),
+("headphones", "music_dep", 25, 2000, 0),
+("book","books_dep", 12, 10000, 0),
+("backpack", "sport_dep",60, 3000, 0),
+("computer","electronics_dep", 1500, 7000, 0),
+("sun glasses", "apparel_dep", 10, 3000, 0),
+("notebook", "work_dep", 10, 3000, 0),
+("pen", "work_dep", 1, 2500, 0),
+("chair", "furniture_dep", 200, 1000, 0),
+("coffee", "food_dep", 3, 5, 0);
+
 
 SELECT * FROM products;

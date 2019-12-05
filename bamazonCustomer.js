@@ -23,7 +23,7 @@ function action() {
     connection.query("SELECT * FROM products", function (err, res) {
         if (err) throw err;
         for (var i = 0; i < res.length; i++) {
-            console.log(res[i].item_id + " | " + res[i].product_name + " | " + res[i].price + " | " + res[i].stock_quantity);
+            console.log(res[i].item_id + " | " + res[i].product_name + " | " + res[i].price + " | " + res[i].stock_quantity + " | " + res[i].product_sales);
             // console.log("---------------------------------") //only print line after item 10
         };
         //PROMPT USER with 2 messages to select: id + units
@@ -48,7 +48,7 @@ function action() {
             }
         ])
             .then(function (answer) {
-                var product = res[(answer.product - 1)];
+                var product = res[answer.product - 1];
                 var orderQuantity = answer.orderQuantity;
                 //if not enough units, print "Insufficient quantity!"
                 if (orderQuantity > product.stock_quantity) {
@@ -76,9 +76,8 @@ function action() {
                         });
                 } else {
                     //if enough quantities are ordered: 
-                    var newStock = parseInt((product.stock_quantity - orderQuantity));
-
                     // update database to reflect quantities 
+                    var newStock = parseInt((product.stock_quantity - orderQuantity));
                     connection.query(
                         "UPDATE products SET ? WHERE ?",
                         [
@@ -87,13 +86,30 @@ function action() {
                             },
                             {
                                 item_id: product.item_id
-                            }
+                            },
                         ], function (err, res) {
                             if (err) throw err;
                             console.log(orderQuantity + " " + product.product_name + " " + "ordered!\n" + "Total: $" + orderQuantity * product.price);
-
                         }
                     );
+                    //         var prodSales = product.product_sales;
+                    // prodSales += (num * product.price);
+
+                    var priceXquantity = product.product_sales;
+                    priceXquantity += orderQuantity * product.price;
+                    // parseInt((orderQuantity * product.price));
+
+                    connection.query("UPDATE products SET ? WHERE ?",
+                        [
+                            {
+                                product_sales: priceXquantity
+                            },
+                            {
+                                item_id: product.item_id
+                            }
+                        ], function (err) {
+                            if (err) throw err;
+                        })
                     // console.log(query.sql);  // logs the actual query being run
 
                 };
