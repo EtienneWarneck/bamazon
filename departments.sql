@@ -11,13 +11,13 @@ CREATE TABLE departments (
 );
 
 INSERT INTO departments (department_name, over_head_cost) VALUES
-("apparel_dep", 10),
-("music_dep", 20),
-("books_dep", 10),
-("sport_dep",30),
-("electronics_dep", 50),
-("food_dep", 100),
-("work_dep",50),
-("furniture_dep", 30);
+("apparel_dep", 10000),
+("music_dep", 20000),
+("books_dep", 10000),
+("sport_dep",30000),
+("electronics_dep", 50000),
+("food_dep", 100000),
+("work_dep",50000),
+("furniture_dep", 30000);
 
 SELECT * FROM departments;
