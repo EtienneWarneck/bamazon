@@ -48,6 +48,7 @@ function viewProducts() {
         if (err) throw err;
         var t = new Table;
         res.forEach(function (product) {
+            // console.log(product);
             t.cell('Item ID', product.item_id)
             t.cell('Product Name', product.product_name)
             t.cell('Department', product.department_name)
@@ -148,7 +149,13 @@ function addProduct() {
         {
             name: "quantities",
             type: "input",
-            message: "How many items would you like to add?"
+            message: "How many items would you like to add?",
+            validate: function (value) {
+                if (isNaN(value) === false) {
+                    return true;
+                }
+                return false;
+            }
         },
     ])
         .then(function (answer) {
@@ -166,7 +173,7 @@ function addProduct() {
                     if (err) throw err;
                     console.log("New Product created successfully!");
                     console.log("---------------------------------");
-                    console.log(start());
+                    start();
                 });
         });
 };

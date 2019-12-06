@@ -10,7 +10,7 @@ var connection = mysql.createConnection({
     database: "bamazon_db"
 });
 
-connection.connect(function (err) { // connect to the mysql server and sql database
+connection.connect(function (err) { 
 
     if (err) throw err;
     console.log("connected as id " + connection.threadId + "\n");
@@ -62,7 +62,7 @@ function action() {
                 console.log("---------------------------------")
                 console.log("Insufficient Quantity!")
                 console.log("---------------------------------")
-
+                
                 inquirer.prompt([
                     {
                         message: "Would you like to place a new order?",
@@ -71,17 +71,17 @@ function action() {
                         name: "action"
                     }
                 ])
-                    .then(function (answer) {
-                        switch (answer.action) {
-                            case ("New Order"):
-                                // console.log("this is working");
-                                action();
-                                break;
+                .then(function (answer) {
+                    switch (answer.action) {
+                        case ("New Order"):
+                            // console.log("this is working");
+                            action();
+                            break;
                             case ("Exit \n"):
                                 connection.end();
-                        }
-                    });
-            } else {
+                            }
+                        });
+                    } else {
                 //if enough quantities are ordered: 
                 // update database to reflect quantities 
                 var newStock = parseInt((product.stock_quantity - orderQuantity));

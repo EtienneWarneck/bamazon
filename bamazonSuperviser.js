@@ -1,5 +1,6 @@
 var mysql = require("mysql");
 var inquirer = require("inquirer");
+var Table = require('easy-table');
 
 var connection = mysql.createConnection({
     host: "localhost",
@@ -8,11 +9,12 @@ var connection = mysql.createConnection({
     password: "password",
     database: "bamazon_db"
 });
+
 connection.connect(function (err) {
     if (err) throw err;
-    runSearch();
+    start();
 });
-function runSearch() {
+function start() {
     inquirer
         .prompt({
             name: "action",
@@ -31,38 +33,63 @@ function runSearch() {
                 case "Create new Department":
                     createNewDepartment();
                     break;
-
             }
         });
 }
-
 function viewProductSaleByDepartment() {
-    connection.query(`SELECT
-    departments.*, products.department_name 
-    FROM departments
-    JOIN products ON departments.department_name = products.department_name`
+    // var profit = products.product_sales - departments.over_head_cost
+    connection.query("SELECT departments.department_id, departments.department_name, departments.over_head_cost,(SUM(products.product_sales) - departments.over_head_cost) AS total_profit, SUM(products.product_sales) AS product_sales FROM departments JOIN products ON (departments.department_name = products.department_name) GROUP BY departments.department_id ORDER BY departments.department_id asc"
 
         , function (err, res) {
             if (err) throw err;
-            for (var i = 0; i < res.length; i++) {
-                console.log("Dep ID: " + res[i].department_id + "Dep NAME: " + res[i].department_name + "Dep OHC: " + res[i].over_head_cost );
-            };
-            // var query =`SELECT 
-            // departments.department_id, departments.department_name, departments.over_head_cost,
-            // FROM bamazon_db.departments` ;
-            // connection.query(query,function (err, result) {
-            //     if (err) throw err;
-            //     for (var i = 0; i < result.length; i++) {
-            //         console.log("department_id: " + result[i].departments.department_id 
-            //         // + " || department_name: " + res[i].department_name
-            //         //     + " || over_head_cost: " + res[i].over_head_cost + " || product_sales: " + res[i].product_sales
-            //             );
-            // }
+            var t = new Table;
+            res.forEach(function (departments) {
+                t.cell('Department ID', departments.department_id)
+                t.cell('Department Name', departments.department_name)
+                t.cell('Overhead Cost', departments.over_head_cost)
+                t.cell('Product Sales', departments.product_sales)
+                t.cell('Total profit', departments.total_profit)
+                t.newRow()
+            });
+            console.log(t.toString());
+            console.log("-----------------------------------------------------------");
+            start();
         });
 };
 
-// products.products_sale,
-// INNER JOIN bamazon_db.departments
-// departments.department_id, departments.department_name, departments.over_head_cost,
-// INNER JOIN bamazon.products
-// ON departments.department_name = products.department_name
+function createNewDepartment() {
+    console.log("new Department");
+    inquirer.prompt([
+        {
+            name: "dep",
+            type: "input",
+            message: "What is the department's name?"
+        },
+        {
+            name: "overhead_cost",
+            type: "input",
+            message: "What is the overhead cost of the department?",
+            validate: function (value) {
+                if (isNaN(value) === false) {
+                    return true;
+                }
+                return false;
+            }
+        },
+    ])
+        .then(function (answer) {
+            // var overHead = "0";
+            connection.query(
+                "INSERT INTO departments SET ?",
+                {
+                    department_name: answer.dep,
+                    over_head_cost: answer.overhead_cost,
+                },
+                function (err) {
+                    if (err) throw err;
+                    console.log("New Department created successfully!");
+                    console.log("---------------------------------");
+                   start();
+                });
+        });
+};
