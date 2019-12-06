@@ -22,8 +22,8 @@ INSERT INTO products (product_name, department_name, price, stock_quantity, prod
 ("sun glasses", "apparel_dep", 10, 3000, 0),
 ("notebook", "work_dep", 10, 3000, 0),
 ("pen", "work_dep", 1, 2500, 0),
-("chair", "furniture_dep", 200, 1000, 0),
-("coffee", "food_dep", 3, 5, 0);
+("chair", "furniture_dep", 200, 3, 0),
+("coffee", "food_dep", 3, 4, 0);
 
 
 SELECT * FROM products;
