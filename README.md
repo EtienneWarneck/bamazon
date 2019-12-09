@@ -19,6 +19,8 @@ npm install
 node bamazonCustomer.js
 ```
 
+![Customer](https://EtienneWarneck.github.com/bamazon/1_Customer.png?raw=true)
+
 To run the manager interface please follow the steps below:
 
 ```
