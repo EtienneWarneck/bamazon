@@ -26,6 +26,9 @@ cd bamazon
 npm install
 node bamazonManager.js
 ```
+
+![ Customer](../screenshot/1_Customer.png)
+
 To run the superviser interface please follow the steps below:
 
 ```
