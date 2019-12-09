@@ -1,4 +1,3 @@
-
 USE bamazon_db;
 
 DROP TABLE products;

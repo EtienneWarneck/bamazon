@@ -1,13 +1,14 @@
 # bamazon
 
-Implementating command lines with **node.js**, (**easy-table** and **inquirer** npm), this app is connected to a database using **mySQL** and allows to:
-
+Implementation of command lines to connect a database to an app allowing to:
 
 * buy items _(customer.js)_,
 * update an inventory and create new products _(manager.js)_ 
 * and departments _(superviser.js)_.
 
-It also adds some commerce related calculations on the fly and looks ideal to update an ecommerce website for example. 
+Tools: **node.js**, **MySQLWorkbench**.
+npm: **MySQL**, **inquirer** and **easy-table**
+
 
 To run the customer interface please follow the steps below:
 
