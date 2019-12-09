@@ -2,9 +2,9 @@
 
 Implementation of command lines to connect a database to an app allowing to:
 
-* buy items _(customer.js)_,
-* update an inventory and create new products _(manager.js)_ 
-* and departments _(superviser.js)_.
+* buy items _(bamazonCustomer.js)_,
+* update an inventory and create new products _(bamazonManager.js)_ 
+* and departments _(bamazonSuperviser.js)_.
 
 Tools: **node.js**, **MySQLWorkbench**.
 npm: **MySQL**, **inquirer** and **easy-table**
